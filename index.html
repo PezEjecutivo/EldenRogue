@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css" />
+        <title>Elden Ring Roguelike!</title>
+        <style>
+            body {
+                margin: 20px;
+            }
+            .hidden {
+                display: none;
+            }
+
+            .second {
+                margin-left: 51%;
+                margin-top: -7.1%;
+            }
+
+            .bosses-section {
+                margin-right: 50%;
+            }
+
+            .pointer {
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <div>
+                <h1 style="text-align: center">Puntos de la partida</h1>
+                <div style="display: flex; flex-direction: row; justify-content: space-between; margin-top: -10%">
+                    <h3 class="pointer" id="totals">Totales - 0</h3>
+                    <h3 class="pointer" id="minors">Menores - 0</h3>
+                    <h3 class="pointer" id="mayors">Mayores - 0</h3>
+                </div>
+            </div>
+
+            <div class="pointer" id="reset" style="display: flex; flex-direction: row; justify-content: space-between">
+                <h1>Bosses</h1>
+                <h1>-</h1>
+                <h1 id="lvl">lvl 1</h1>
+            </div>
+
+            <select name="overworld-bosses" id="overworld-bosses" class="minor-bosses hidden second">
+                <option value="None"></option>
+                <option value="4">Bell Bering Hunter (Limgrave)</option>
+                <option value="4">Deathbird (Limgrave)</option>
+                <option value="4">Night's Cavalry (Limgrave)</option>
+                <option value="4">Tibia Mariner (Limgrave)</option>
+                <option value="4">Tree Sentinel (Limgrave)</option>
+                <option value="5">Deathbird (Weeping Peninsula)</option>
+                <option value="5">Erdtree Avatar (Weeping Peninsula)</option>
+                <option value="5">Night's Cavalry (Weeping Peninsula)</option>
+                <option value="7">Grafted Scion (Chapel of Anticipation)</option>
+                <option value="8">Nox Swordstress & Nox Priest</option>
+                <option value="9">Bell Bering Hunter (Liurna)</option>
+                <option value="9">Deathbird (Liurna)</option>
+                <option value="9">Death Rite Bird (Liurna)</option>
+                <option value="9">Erdtree Avatar (Liurna West)</option>
+                <option value="9">Erdtree Avatar (Liurna East)</option>
+                <option value="9">Night's Cavalry (Liurna East)</option>
+                <option value="9">Night's Cavalry (Liurna North)</option>
+                <option value="9">Omenkiller (Albinauric Village)</option>
+                <option value="9">Tibia Mariner (Liurna)</option>
+                <option value="10">Death Rite Bird (Caelid)</option>
+                <option value="10">Night's Cavalry (Caelid)</option>
+                <option value="10">Putrid Avatar (Caelid)</option>
+                <option value="11">Black Knife Assasin (Altus)</option>
+                <option value="11">Fallingstar Beast (Altus Plateau)</option>
+                <option value="11">Giant Wormface</option>
+                <option value="11">Godskin Apostole (Altus)</option>
+                <option value="11">Night's Cavalry (Altus Plateau)</option>
+                <option value="11">Tree Sentinel x2 (Altus)</option>
+                <option value="12">Bell Bering Hunter (Capital Outskirt)</option>
+                <option value="12">Deathbird (Capital Outskirt)</option>
+                <option value="12">Demi-Human Queen Maggie (Mt. Gelmir)</option>
+                <option value="12">Draconic Tree Sentinel (Capital Outskirts)</option>
+                <option value="12">Tibia Mariner (Altus Plateau)</option>
+                <option value="12">Ulcerated Tree Spirit (Mt. Gelmir)</option>
+                <option value="13">Black Blade Kindred (Forbidden Lands)</option>
+                <option value="13">Fell Twins</option>
+                <option value="14">Full-Grown Fallingstar Beast</option>
+                <option value="15">Death Rite Bird (Mountaintops)</option>
+                <option value="15">Erdtree Avatar (Mountaintops)</option>
+                <option value="15">Night's Cavalry (Forbidden Lands)</option>
+                <option value="18">Bell Bering Hunter (Dragonbarrow)</option>
+                <option value="18">Black Blade Kindred (Dragonbarrow)</option>
+                <option value="18">Night's Cavalry (Dragonbarrow)</option>
+                <option value="18">Putrid Avatar (Dragonbarrow)</option>
+                <option value="19">Night's Cavalry x2</option>
+                <option value="19">Death Rite Bird (Consecrated Snowfield)</option>
+                <option value="19">Putrid Avatar (Consecrated Snowfield)</option>
+            </select>
+
+            <select name="evergaol-bosses" id="evergaol-bosses" class="minor-bosses hidden second">
+                <option value="None"></option>
+                <option value="4">Bloodhound Knight Darriwil</option>
+                <option value="5">Ancient Hero of Zamor (W. Peninsula)</option>
+                <option value="6">Crucible Knight (Limgrave)</option>
+                <option value="8">Adan, Thief of fire</option>
+                <option value="9">Bols, Carian Knigth</option>
+                <option value="9">Onyx Lord (Liurna)</option>
+                <option value="10">Battlemage Hugues</option>
+                <option value="11">Godefroy the Grafted</option>
+                <option value="14">Roundtable Knight Vyke</option>
+                <option value="16">Alecto, Black Knife Ringleader</option>
+            </select>
+
+            <select name="catacomb-bosses" id="catacomb-bosses" class="minor-bosses hidden second">
+                <option value="None"></option>
+                <option value="2">Black Knife Assasin (Limgrave)</option>
+                <option value="2">Erdtree Burial Watchdog (Limgrave)</option>
+                <option value="2">Grave Warden Duelist (Limgrave)</option>
+                <option value="3">Cemetery Shade (Weeping Peninsula)</option>
+                <option value="3">Erdtree Burial Watchdog (Weeping Peninsula)</option>
+                <option value="7">Black Knife Assasin (Liurna)</option>
+                <option value="7">Cemety Shade (Liurna)</option>
+                <option value="7">Erdtree Burial Watchdog (Liurna)</option>
+                <option value="7">Spiritcaller Snail (Liurna)</option>
+                <option value="7">Ulcerated Tree Spirit (Limgrave)</option>
+                <option value="8">Cemety Shade (Caelid)</option>
+                <option value="8">Erdtree Burial Watchdog x2</option>
+                <option value="9">Ancient Hero of Zamor (Altus)</option>
+                <option value="9">Perfumer Tricia + Leonine Misbergotten</option>
+                <option value="10">Erdtree Burial Watchdog (Altus)</option>
+                <option value="10">Grave Warden Duelist (Capital Outskirts)</option>
+                <option value="10">Red Wolf of the Champion</option>
+                <option value="12">Crucible Knight Ordovis</option>
+                <option value="13">Ancient Hero of Zamor (Mountaintops)</option>
+                <option value="13">Ulcerated Tree Spirit (Mountaintops)</option>
+                <option value="14">Esgar, Priest of Blood</option>
+                <option value="16">Putrid Tree Spirit (Caelid)</option>
+                <option value="16">Stray Mimic Tear</option>
+                <option value="17">Putrid Grave Warden Duelist</option>
+            </select>
+
+            <select name="cave-bosses" id="cave-bosses" class="minor-bosses hidden second">
+                <option value="None"></option>
+                <option value="1">Soldier of Godrick</option>
+                <option value="2">Beastman of Farum Azula</option>
+                <option value="2">Guardian Golem</option>
+                <option value="2">Patches</option>
+                <option value="3">Demi-Human Chief x2</option>
+                <option value="3">Miranda the Bligthed Bloom</option>
+                <option value="3">Runebear</option>
+                <option value="7">Bloodhound Knight</option>
+                <option value="7">Cleanrot Knight</option>
+                <option value="8">Cleanrot Knigth x2</option>
+                <option value="8">Crystalian x2 (Liurna)</option>
+                <option value="8">Frenzied Duelist</option>
+                <option value="9">Abductor Virgins</option>
+                <option value="10">Demi-Human Queen Margot</option>
+                <option value="10">Kindred of Rot x2</option>
+                <option value="11">Black Knife Assasin (invisible)</option>
+                <option value="11">Crystalian x3</option>
+                <option value="11">Necromancer Garris</option>
+                <option value="11">Omenkiller & Miranda</option>
+                <option value="13">Spiritcaller Snail (Mountaintops)</option>
+                <option value="16">Beastman of Farum Azula x2</option>
+                <option value="17">Misbergotten Crusader</option>
+            </select>
+
+            <select name="tunnel-bosses" id="tunnel-bosses" class="minor-bosses hidden second">
+                <option value="None"></option>
+                <option value="2">Mad Pumpkin Head</option>
+                <option value="2">Stondigger Troll (Limgrave)</option>
+                <option value="3">Scaly Misbergotten</option>
+                <option value="7">Crystalian</option>
+                <option value="7">Royal Revenant</option>
+                <option value="8">Fallingstar Beast (Caelid)</option>
+                <option value="8">Mad Pumpkin Head x2</option>
+                <option value="8">Magma Wyrm (Caelid)</option>
+                <option value="9">Demi-Human Queen Gilika</option>
+                <option value="9">Sanguine Noble</option>
+                <option value="9">Stonedigger Troll (Altus)</option>
+                <option value="10">Crystalian x2</option>
+                <option value="10">Onyx Lord (Capital Outskirts)</option>
+                <option value="17">Astel, Star of Darkness</option>
+            </select>
+
+            <select name="bosses-mayor" id="bosses-mayor" class="mayor-bosses hidden second">
+                <option value="None"></option>
+                <option value="4">Leonine Misbergotten (Castle Morne)</option>
+                <option value="4">Margit, the Fell Omen</option>
+                <option value="6">Dragonkin Soldier of Nokstella</option>
+                <option value="6">Flying Dragon Agheel</option>
+                <option value="7">Ancestor Spirit</option>
+                <option value="7">Red Wolf of Radagon</option>
+                <option value="7">Royal Knigth Loretta</option>
+                <option value="8">Magma Wyrm Makar</option>
+                <option value="9">Misbergotten Warrior & Crucible Knigth</option>
+                <option value="10">Commander O'Neil</option>
+                <option value="10">Elemer of the Briar</option>
+                <option value="10">Glinstone Dragon Smarag</option>
+                <option value="11">Mimic tear</option>
+                <option value="12">Decaying Ekzykes</option>
+                <option value="12">Dragonkin Soldier (Siofra)</option>
+                <option value="12">Fia's Champions</option>
+                <option value="12">Godfrey, First Elden Lord (Golden Shade)</option>
+                <option value="12">Godskin Noble (Volcano Manor)</option>
+                <option value="12">Magma Wyrm (Mt. Gelmir)</option>
+                <option value="12">Valiant Gargolyes</option>
+                <option value="13">Ancient Dragon Lanssea<x/option></option>
+                <option value="14">Commander Nial</option>
+                <option value="14">Crucible Knigth Silura</option>
+                <option value="14">Dragonkin Soldier (Lake of Rot)</option>
+                <option value="14">Mohg, the Omen</option>
+                <option value="15">Godskin Duo</option>
+                <option value="16">Godskin Apostole (Caelid)</option>
+                <option value="16">Sir Gideon Ofnir, the All-Knowing</option>
+                <option value="17">Borelais, the Freezing Fog</option>
+                <option value="18">Flying Dragon Greyll</option>
+                <option value="18">Glinstone Dragon Adula</option>
+                <option value="19">Great Wyrm Theordorix</option>
+                <option value="19">Loretta, Knight of the Haligtree</option>
+            </select>
+
+            <select name="bosses-rememberance" id="bosses-rememberance" class="rememberance-bosses hidden second">
+                <option value="None"></option>
+                <option value="5">Godrick the Grafted</option>
+                <option value="8">Rennala, Queen of the Full Moon</option>
+                <option value="10">Regal Ancestor Spirit</option>
+                <option value="11">Starscourge Radahn</option>
+                <option value="12">Astel, Naturalborn of the Void</option>
+                <option value="12">Lichdragon Fortissax</option>
+                <option value="12">Morgott, the Omen King</option>
+                <option value="13">Rykard, Lord of Blasphemy</option>
+                <option value="15">Fire Giant</option>
+                <option value="16">Beast Clergyman / Maliketh</option>
+                <option value="17">Godfrey, First Elden Lord / Hoarah Loux</option>
+                <option value="18">Dragonlord Placidusax</option>
+                <option value="18">Radagon + Elden Beast</option>
+                <option value="18">Radagon of the Golden Order</option>
+                <option value="18">Elden Beast</option>
+                <option value="19">Mohg, Lord of Blood</option>
+                <option value="21">Malenia, Blade of Miquella</option>
+            </select>
+
+            <select name="bosses-section" class="bosses-section">
+                <option value="None">Select Boss Section</option>
+                <option value="overworld">Overworld Bosses</option>
+                <option value="evergaol">Evergaol Bosses</option>
+                <option value="catacomb">Catacomb and Grave Bosses</option>
+                <option value="cave">Cave Bosses</option>
+                <option value="tunnel">Tunnel and Ruin Bosses</option>
+                <option value="great">Great Enemys</option>
+                <option value="rememberance">Rememberance</option>
+            </select>
+        </div>
+
+        <script>
+            var lvls = 1;
+            var minorPoints = 0;
+            const minors = document.getElementById("minors");
+            var mayorPoints = 0;
+            const mayors = document.getElementById("mayors");
+            var totalPoints = 0;
+            const totals = document.getElementById("totals");
+            var type = "";
+
+            const bossesLvls = [];
+            document.body.addEventListener("change", function (event) {
+                const target = event.target;
+
+                if (target.classList.contains("bosses-section")) {
+                    const selectedValue = target.value;
+
+                    // Create a new select element
+                    const newSelect = document.createElement("select");
+                    newSelect.name = `${selectedValue}-bosses`;
+                    newSelect.id = `${selectedValue}-bosses`;
+                    newSelect.classList.add("new-select");
+                    newSelect.classList.add("second");
+
+                    // Add the options based on the selected value
+                    const options = {
+                        overworld: [
+                            { value: "None", text: "" },
+                            { value: "4", text: "Bell Bering Hunter (Limgrave)" },
+                            { value: "4", text: "Deathbird (Limgrave)" },
+                            { value: "4", text: "Night's Cavalry (Limgrave)" },
+                            { value: "4", text: "Tibia Mariner (Limgrave)" },
+                            { value: "4", text: "Tree Sentinel (Limgrave)" },
+                            { value: "5", text: "Deathbird (Weeping Peninsula)" },
+                            { value: "5", text: "Erdtree Avatar (Weeping Peninsula)" },
+                            { value: "5", text: "Night's Cavalry (Weeping Peninsula)" },
+                            { value: "7", text: "Grafted Scion (Chapel of Anticipation)" },
+                            { value: "8", text: "Nox Swordstress & Nox Priest" },
+                            { value: "9", text: "Bell Bering Hunter (Liurna)" },
+                            { value: "9", text: "Deathbird (Liurna)" },
+                            { value: "9", text: "Death Rite Bird (Liurna)" },
+                            { value: "9", text: "Erdtree Avatar (Liurna West)" },
+                            { value: "9", text: "Erdtree Avatar (Liurna East)" },
+                            { value: "9", text: "Night's Cavalry (Liurna East)" },
+                            { value: "9", text: "Night's Cavalry (Liurna North)" },
+                            { value: "9", text: "Omenkiller (Albinauric Village)" },
+                            { value: "9", text: "Tibia Mariner (Liurna)" },
+                            { value: "10", text: "Death Rite Bird (Caelid)" },
+                            { value: "10", text: "Night's Cavalry (Caelid)" },
+                            { value: "10", text: "Putrid Avatar (Caelid)" },
+                            { value: "11", text: "Black Knife Assasin (Altus)" },
+                            { value: "11", text: "Fallingstar Beast (Altus Plateau)" },
+                            { value: "11", text: "Giant Wormface" },
+                            { value: "11", text: "Godskin Apostole (Altus)" },
+                            { value: "11", text: "Night's Cavalry (Altus Plateau)" },
+                            { value: "11", text: "Tree Sentinel x2 (Altus)" },
+                            { value: "12", text: "Bell Bering Hunter (Capital Outskirt)" },
+                            { value: "12", text: "Deathbird (Capital Outskirt)" },
+                            { value: "12", text: "Demi-Human Queen Maggie (Mt. Gelmir)" },
+                            { value: "12", text: "Draconic Tree Sentinel (Capital Outskirts)" },
+                            { value: "12", text: "Tibia Mariner (Altus Plateau)" },
+                            { value: "12", text: "Ulcerated Tree Spirit (Mt. Gelmir)" },
+                            { value: "13", text: "Black Blade Kindred (Forbidden Lands)" },
+                            { value: "13", text: "Fell Twins" },
+                            { value: "14", text: "Full-Grown Fallingstar Beast" },
+                            { value: "15", text: "Death Rite Bird (Mountaintops)" },
+                            { value: "15", text: "Erdtree Avatar (Mountaintops)" },
+                            { value: "15", text: "Night's Cavalry (Forbidden Lands)" },
+                            { value: "18", text: "Bell Bering Hunter (Dragonbarrow)" },
+                            { value: "18", text: "Black Blade Kindred (Dragonbarrow)" },
+                            { value: "18", text: "Night's Cavalry (Dragonbarrow)" },
+                            { value: "18", text: "Putrid Avatar (Dragonbarrow)" },
+                            { value: "19", text: "Night's Cavalry x2" },
+                            { value: "19", text: "Death Rite Bird (Consecrated Snowfield)" },
+                            { value: "19", text: "Putrid Avatar (Consecrated Snowfield)" },
+                        ],
+                        evergaol: [
+                            { value: "None", text: "" },
+                            { value: "4", text: "Bloodhound Knight Darriwil" },
+                            { value: "5", text: "Ancient Hero of Zamor (W. Peninsula)" },
+                            { value: "6", text: "Crucible Knight (Limgrave)" },
+                            { value: "8", text: "Adan, Thief of fire" },
+                            { value: "9", text: "Bols, Carian Knigth" },
+                            { value: "9", text: "Onyx Lord (Liurna)" },
+                            { value: "10", text: "Battlemage Hugues" },
+                            { value: "11", text: "Godefroy the Grafted" },
+                            { value: "14", text: "Roundtable Knight Vyke" },
+                            { value: "16", text: "Alecto, Black Knife Ringleader" },
+                        ],
+                        catacomb: [
+                            { value: "None", text: "" },
+                            { value: "2", text: "Black Knife Assasin (Limgrave)" },
+                            { value: "2", text: "Erdtree Burial Watchdog (Limgrave)" },
+                            { value: "2", text: "Grave Warden Duelist (Limgrave)" },
+                            { value: "3", text: "Cemetery Shade (Weeping Peninsula)" },
+                            { value: "3", text: "Erdtree Burial Watchdog (Weeping Peninsula)" },
+                            { value: "7", text: "Black Knife Assasin (Liurna)" },
+                            { value: "7", text: "Cemety Shade (Liurna)" },
+                            { value: "7", text: "Erdtree Burial Watchdog (Liurna)" },
+                            { value: "7", text: "Spiritcaller Snail (Liurna)" },
+                            { value: "7", text: "Ulcerated Tree Spirit (Limgrave)" },
+                            { value: "8", text: "Cemety Shade (Caelid)" },
+                            { value: "8", text: "Erdtree Burial Watchdog x2" },
+                            { value: "9", text: "Ancient Hero of Zamor (Altus)" },
+                            { value: "9", text: "Perfumer Tricia + Leonine Misbergotten" },
+                            { value: "10", text: "Erdtree Burial Watchdog (Altus)" },
+                            { value: "10", text: "Grave Warden Duelist (Capital Outskirts)" },
+                            { value: "10", text: "Red Wolf of the Champion" },
+                            { value: "12", text: "Crucible Knight Ordovis" },
+                            { value: "13", text: "Ancient Hero of Zamor (Mountaintops)" },
+                            { value: "13", text: "Ulcerated Tree Spirit (Mountaintops)" },
+                            { value: "14", text: "Esgar, Priest of Blood" },
+                            { value: "16", text: "Putrid Tree Spirit (Caelid)" },
+                            { value: "16", text: "Stray Mimic Tear" },
+                            { value: "17", text: "Putrid Grave Warden Duelist" },
+                        ],
+                        cave: [
+                            { value: "None", text: "" },
+                            { value: "1", text: "Soldier of Godrick" },
+                            { value: "2", text: "Beastman of Farum Azula" },
+                            { value: "2", text: "Guardian Golem" },
+                            { value: "2", text: "Patches" },
+                            { value: "3", text: "Demi-Human Chief x2" },
+                            { value: "3", text: "Miranda the Bligthed Bloom" },
+                            { value: "3", text: "Runebear" },
+                            { value: "7", text: "Bloodhound Knight" },
+                            { value: "7", text: "Cleanrot Knight" },
+                            { value: "8", text: "Cleanrot Knigth x2" },
+                            { value: "8", text: "Crystalian x2 (Liurna)" },
+                            { value: "8", text: "Frenzied Duelist" },
+                            { value: "9", text: "Abductor Virgins" },
+                            { value: "10", text: "Demi-Human Queen Margot" },
+                            { value: "10", text: "Kindred of Rot x2" },
+                            { value: "11", text: "Black Knife Assasin (invisible)" },
+                            { value: "11", text: "Crystalian x3" },
+                            { value: "11", text: "Necromancer Garris" },
+                            { value: "11", text: "Omenkiller & Miranda" },
+                            { value: "13", text: "Spiritcaller Snail (Mountaintops)" },
+                            { value: "16", text: "Beastman of Farum Azula x2" },
+                            { value: "17", text: "Misbergotten Crusader" },
+                        ],
+                        tunnel: [
+                            { value: "None", text: "" },
+                            { value: "2", text: "Mad Pumpkin Head" },
+                            { value: "2", text: "Stondigger Troll (Limgrave)" },
+                            { value: "3", text: "Scaly Misbergotten" },
+                            { value: "7", text: "Crystalian" },
+                            { value: "7", text: "Royal Revenant" },
+                            { value: "8", text: "Fallingstar Beast (Caelid)" },
+                            { value: "8", text: "Mad Pumpkin Head x2" },
+                            { value: "8", text: "Magma Wyrm (Caelid)" },
+                            { value: "9", text: "Demi-Human Queen Gilika" },
+                            { value: "9", text: "Sanguine Noble" },
+                            { value: "9", text: "Stonedigger Troll (Altus)" },
+                            { value: "10", text: "Crystalian x2" },
+                            { value: "10", text: "Onyx Lord (Capital Outskirts)" },
+                            { value: "17", text: "Astel, Star of Darkness" },
+                        ],
+                        great: [
+                            { value: "None", text: "" },
+                            { value: "4", text: "Leonine Misbergotten (Castle Morne)" },
+                            { value: "4", text: "Margit, the Fell Omen" },
+                            { value: "6", text: "Dragonkin Soldier of Nokstella" },
+                            { value: "6", text: "Flying Dragon Agheel" },
+                            { value: "7", text: "Ancestor Spirit" },
+                            { value: "7", text: "Red Wolf of Radagon" },
+                            { value: "7", text: "Royal Knigth Loretta" },
+                            { value: "8", text: "Magma Wyrm Makar" },
+                            { value: "9", text: "Misbergotten Warrior & Crucible Knigth" },
+                            { value: "10", text: "Commander O'Neil" },
+                            { value: "10", text: "Elemer of the Briar" },
+                            { value: "10", text: "Glinstone Dragon Smarag" },
+                            { value: "11", text: "Mimic tear" },
+                            { value: "12", text: "Decaying Ekzykes" },
+                            { value: "12", text: "Dragonkin Soldier (Siofra)" },
+                            { value: "12", text: "Fia's Champions" },
+                            { value: "12", text: "Godfrey, First Elden Lord (Golden Shade)" },
+                            { value: "12", text: "Godskin Noble (Volcano Manor)" },
+                            { value: "12", text: "Magma Wyrm (Mt. Gelmir)" },
+                            { value: "12", text: "Valiant Gargolyes" },
+                            { value: "13", text: "Ancient Dragon Lanssea" },
+                            { value: "14", text: "Commander Nial" },
+                            { value: "14", text: "Crucible Knigth Silura" },
+                            { value: "14", text: "Dragonkin Soldier (Lake of Rot)" },
+                            { value: "14", text: "Mohg, the Omen" },
+                            { value: "15", text: "Godskin Duo" },
+                            { value: "16", text: "Godskin Apostole (Caelid)" },
+                            { value: "16", text: "Sir Gideon Ofnir, the All-Knowing" },
+                            { value: "17", text: "Borelais, the Freezing Fog" },
+                            { value: "18", text: "Flying Dragon Greyll" },
+                            { value: "18", text: "Glinstone Dragon Adula" },
+                            { value: "19", text: "Great Wyrm Theordorix" },
+                            { value: "19", text: "Loretta, Knight of the Haligtree" },
+                        ],
+                        rememberance: [
+                            { value: "None", text: "" },
+                            { value: "5", text: "Godrick the Grafted" },
+                            { value: "8", text: "Rennala, Queen of the Full Moon" },
+                            { value: "10", text: "Regal Ancestor Spirit" },
+                            { value: "11", text: "Starscourge Radahn" },
+                            { value: "12", text: "Astel, Naturalborn of the Void" },
+                            { value: "12", text: "Lichdragon Fortissax" },
+                            { value: "12", text: "Morgott, the Omen King" },
+                            { value: "13", text: "Rykard, Lord of Blasphemy" },
+                            { value: "15", text: "Fire Giant" },
+                            { value: "16", text: "Beast Clergyman / Maliketh" },
+                            { value: "17", text: "Godfrey, First Elden Lord / Hoarah Loux" },
+                            { value: "18", text: "Dragonlord Placidusax" },
+                            { value: "18", text: "Radagon + Elden Beast" },
+                            { value: "18", text: "Radagon of the Golden Order" },
+                            { value: "18", text: "Elden Beast" },
+                            { value: "19", text: "Mohg, Lord of Blood" },
+                            { value: "21", text: "Malenia, Blade of Miquella" },
+                        ],
+                    };
+
+                    // Add options to the new select element
+                    if (options[selectedValue]) {
+                        options[selectedValue].forEach((opt) => {
+                            const option = document.createElement("option");
+                            option.value = opt.value;
+                            option.textContent = opt.text;
+                            newSelect.appendChild(option);
+                        });
+                    }
+
+                    // Append the new select element to the body
+                    document.body.appendChild(newSelect);
+
+                    if (selectedValue == "great") {
+                        type = "mayor";
+                    } else if (selectedValue == "rememberance") {
+                        type = "rememberance";
+                    } else {
+                        type = "minor";
+                    }
+
+                    // Add event listener to newly created select element
+                    newSelect.addEventListener("change", function () {
+                        addPoints(type);
+
+                        const newSelectValue = newSelect.value;
+
+                        if (newSelectValue !== "None") {
+                            const newBossesSectionSelect = document.createElement("select");
+                            newBossesSectionSelect.name = "bosses-section";
+                            newBossesSectionSelect.classList.add("bosses-section");
+                            newBossesSectionSelect.innerHTML = `
+                                <option value="None">Select Boss Section</option>
+                                <option value="overworld">Overworld Bosses</option>
+                                <option value="evergaol">Evergaol Bosses</option>
+                                <option value="catacomb">Catacomb and Grave Bosses</option>
+                                <option value="cave">Cave Bosses</option>
+                                <option value="tunnel">Tunnel and Ruin Bosses</option>
+                                <option value="great">Great Enemies</option>
+                                <option value="rememberance">Remembrance Bosses</option>
+                            `;
+
+                            // Append the new bosses-section select element
+                            document.body.appendChild(newBossesSectionSelect);
+                        }
+
+                        if (bossesLvls.includes(newSelect.value)) {
+                            lvls = parseInt(lvls) + parseInt(newSelect.value / 2);
+                        } else {
+                            lvls = parseInt(lvls) + parseInt(newSelect.value);
+                        }
+
+                        bossesLvls.push(newSelect.value);
+
+                        document.getElementById("lvl").innerHTML = "lvl " + lvls;
+                    });
+                }
+            });
+
+            const refreshBtn = document.getElementById("reset");
+
+            function handleClick() {
+                window.location.reload();
+            }
+
+            function addPoints(type) {
+                if (type == "minor") {
+                    minorPoints++;
+                } else if (type == "mayor") {
+                    mayorPoints++;
+                } else {
+                    mayorPoints += 2;
+                }
+
+                totalPoints++;
+
+                refreshUIPoints();
+            }
+
+            function refreshUIPoints() {
+                minors.innerHTML = "Menores - " + minorPoints;
+                mayors.innerHTML = "Mayores - " + mayorPoints;
+                totals.innerHTML = "Totales - " + totalPoints;
+            }
+
+            document.addEventListener("click", function (event) {
+                const clickedElement = event.target;
+                const elementId = clickedElement.id;
+
+                if (elementId == "minors") {
+                    minorPoints--;
+                } else if (elementId == "mayors") {
+                    mayorPoints--;
+                } else if (elementId == "totals") {
+                    totalPoints--;
+                }
+
+                refreshUIPoints();
+            });
+
+            refreshBtn.addEventListener("click", handleClick);
+        </script>
+    </body>
+</html>
