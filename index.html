@@ -656,6 +656,8 @@
                 tienda.weapons.forEach((weapon) => {
                     const btn = document.createElement("button");
 
+                    btn.title = `${weapon.text} (Precio: ${weapon.value})`;
+
                     // Create an image element
                     const img = document.createElement("img");
                     img.src = weapon.image;
