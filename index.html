@@ -4,6 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css" />
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <title>Elden Ring Roguelike!</title>
         <style>
             body {
@@ -25,6 +26,11 @@
             .pointer {
                 cursor: pointer;
             }
+
+            img {
+                width: 50px; /* Adjust size as needed */
+                height: 50px; /* Adjust size as needed */
+            }
         </style>
     </head>
     <body>
@@ -32,212 +38,26 @@
             <div>
                 <h1 style="text-align: center">Puntos de la partida</h1>
                 <div style="display: flex; flex-direction: row; justify-content: space-between; margin-top: -10%">
-                    <h3 class="pointer" id="totals">Totales - 0</h3>
+                    <h3 class="pointer" id="totals">Totales - 1</h3>
                     <h3 class="pointer" id="minors">Menores - 0</h3>
                     <h3 class="pointer" id="mayors">Mayores - 0</h3>
                 </div>
             </div>
 
+            <div id="shop">
+                <button onclick="weaponShop()">Armas</button>
+                <button onclick="armorShop()">Armadura</button>
+                <button onclick="talismansShop()">Talismanes</button>
+            </div>
+
+            <!-- Menu de la tienda oculto, el boton le añadira el contenido y lo hara visible -->
+            <div id="shopMenu" class="hidden"><h1>hola</h1></div>
+
             <div class="pointer" id="reset" style="display: flex; flex-direction: row; justify-content: space-between">
                 <h1>Bosses</h1>
                 <h1>-</h1>
-                <h1 id="lvl">lvl 1</h1>
+                <h1 id="lvl">lvl 5</h1>
             </div>
-
-            <select name="overworld-bosses" id="overworld-bosses" class="minor-bosses hidden second">
-                <option value="None"></option>
-                <option value="4">Bell Bering Hunter (Limgrave)</option>
-                <option value="4">Deathbird (Limgrave)</option>
-                <option value="4">Night's Cavalry (Limgrave)</option>
-                <option value="4">Tibia Mariner (Limgrave)</option>
-                <option value="4">Tree Sentinel (Limgrave)</option>
-                <option value="5">Deathbird (Weeping Peninsula)</option>
-                <option value="5">Erdtree Avatar (Weeping Peninsula)</option>
-                <option value="5">Night's Cavalry (Weeping Peninsula)</option>
-                <option value="7">Grafted Scion (Chapel of Anticipation)</option>
-                <option value="8">Nox Swordstress & Nox Priest</option>
-                <option value="9">Bell Bering Hunter (Liurna)</option>
-                <option value="9">Deathbird (Liurna)</option>
-                <option value="9">Death Rite Bird (Liurna)</option>
-                <option value="9">Erdtree Avatar (Liurna West)</option>
-                <option value="9">Erdtree Avatar (Liurna East)</option>
-                <option value="9">Night's Cavalry (Liurna East)</option>
-                <option value="9">Night's Cavalry (Liurna North)</option>
-                <option value="9">Omenkiller (Albinauric Village)</option>
-                <option value="9">Tibia Mariner (Liurna)</option>
-                <option value="10">Death Rite Bird (Caelid)</option>
-                <option value="10">Night's Cavalry (Caelid)</option>
-                <option value="10">Putrid Avatar (Caelid)</option>
-                <option value="11">Black Knife Assasin (Altus)</option>
-                <option value="11">Fallingstar Beast (Altus Plateau)</option>
-                <option value="11">Giant Wormface</option>
-                <option value="11">Godskin Apostole (Altus)</option>
-                <option value="11">Night's Cavalry (Altus Plateau)</option>
-                <option value="11">Tree Sentinel x2 (Altus)</option>
-                <option value="12">Bell Bering Hunter (Capital Outskirt)</option>
-                <option value="12">Deathbird (Capital Outskirt)</option>
-                <option value="12">Demi-Human Queen Maggie (Mt. Gelmir)</option>
-                <option value="12">Draconic Tree Sentinel (Capital Outskirts)</option>
-                <option value="12">Tibia Mariner (Altus Plateau)</option>
-                <option value="12">Ulcerated Tree Spirit (Mt. Gelmir)</option>
-                <option value="13">Black Blade Kindred (Forbidden Lands)</option>
-                <option value="13">Fell Twins</option>
-                <option value="14">Full-Grown Fallingstar Beast</option>
-                <option value="15">Death Rite Bird (Mountaintops)</option>
-                <option value="15">Erdtree Avatar (Mountaintops)</option>
-                <option value="15">Night's Cavalry (Forbidden Lands)</option>
-                <option value="18">Bell Bering Hunter (Dragonbarrow)</option>
-                <option value="18">Black Blade Kindred (Dragonbarrow)</option>
-                <option value="18">Night's Cavalry (Dragonbarrow)</option>
-                <option value="18">Putrid Avatar (Dragonbarrow)</option>
-                <option value="19">Night's Cavalry x2</option>
-                <option value="19">Death Rite Bird (Consecrated Snowfield)</option>
-                <option value="19">Putrid Avatar (Consecrated Snowfield)</option>
-            </select>
-
-            <select name="evergaol-bosses" id="evergaol-bosses" class="minor-bosses hidden second">
-                <option value="None"></option>
-                <option value="4">Bloodhound Knight Darriwil</option>
-                <option value="5">Ancient Hero of Zamor (W. Peninsula)</option>
-                <option value="6">Crucible Knight (Limgrave)</option>
-                <option value="8">Adan, Thief of fire</option>
-                <option value="9">Bols, Carian Knigth</option>
-                <option value="9">Onyx Lord (Liurna)</option>
-                <option value="10">Battlemage Hugues</option>
-                <option value="11">Godefroy the Grafted</option>
-                <option value="14">Roundtable Knight Vyke</option>
-                <option value="16">Alecto, Black Knife Ringleader</option>
-            </select>
-
-            <select name="catacomb-bosses" id="catacomb-bosses" class="minor-bosses hidden second">
-                <option value="None"></option>
-                <option value="2">Black Knife Assasin (Limgrave)</option>
-                <option value="2">Erdtree Burial Watchdog (Limgrave)</option>
-                <option value="2">Grave Warden Duelist (Limgrave)</option>
-                <option value="3">Cemetery Shade (Weeping Peninsula)</option>
-                <option value="3">Erdtree Burial Watchdog (Weeping Peninsula)</option>
-                <option value="7">Black Knife Assasin (Liurna)</option>
-                <option value="7">Cemety Shade (Liurna)</option>
-                <option value="7">Erdtree Burial Watchdog (Liurna)</option>
-                <option value="7">Spiritcaller Snail (Liurna)</option>
-                <option value="7">Ulcerated Tree Spirit (Limgrave)</option>
-                <option value="8">Cemety Shade (Caelid)</option>
-                <option value="8">Erdtree Burial Watchdog x2</option>
-                <option value="9">Ancient Hero of Zamor (Altus)</option>
-                <option value="9">Perfumer Tricia + Leonine Misbergotten</option>
-                <option value="10">Erdtree Burial Watchdog (Altus)</option>
-                <option value="10">Grave Warden Duelist (Capital Outskirts)</option>
-                <option value="10">Red Wolf of the Champion</option>
-                <option value="12">Crucible Knight Ordovis</option>
-                <option value="13">Ancient Hero of Zamor (Mountaintops)</option>
-                <option value="13">Ulcerated Tree Spirit (Mountaintops)</option>
-                <option value="14">Esgar, Priest of Blood</option>
-                <option value="16">Putrid Tree Spirit (Caelid)</option>
-                <option value="16">Stray Mimic Tear</option>
-                <option value="17">Putrid Grave Warden Duelist</option>
-            </select>
-
-            <select name="cave-bosses" id="cave-bosses" class="minor-bosses hidden second">
-                <option value="None"></option>
-                <option value="1">Soldier of Godrick</option>
-                <option value="2">Beastman of Farum Azula</option>
-                <option value="2">Guardian Golem</option>
-                <option value="2">Patches</option>
-                <option value="3">Demi-Human Chief x2</option>
-                <option value="3">Miranda the Bligthed Bloom</option>
-                <option value="3">Runebear</option>
-                <option value="7">Bloodhound Knight</option>
-                <option value="7">Cleanrot Knight</option>
-                <option value="8">Cleanrot Knigth x2</option>
-                <option value="8">Crystalian x2 (Liurna)</option>
-                <option value="8">Frenzied Duelist</option>
-                <option value="9">Abductor Virgins</option>
-                <option value="10">Demi-Human Queen Margot</option>
-                <option value="10">Kindred of Rot x2</option>
-                <option value="11">Black Knife Assasin (invisible)</option>
-                <option value="11">Crystalian x3</option>
-                <option value="11">Necromancer Garris</option>
-                <option value="11">Omenkiller & Miranda</option>
-                <option value="13">Spiritcaller Snail (Mountaintops)</option>
-                <option value="16">Beastman of Farum Azula x2</option>
-                <option value="17">Misbergotten Crusader</option>
-            </select>
-
-            <select name="tunnel-bosses" id="tunnel-bosses" class="minor-bosses hidden second">
-                <option value="None"></option>
-                <option value="2">Mad Pumpkin Head</option>
-                <option value="2">Stondigger Troll (Limgrave)</option>
-                <option value="3">Scaly Misbergotten</option>
-                <option value="7">Crystalian</option>
-                <option value="7">Royal Revenant</option>
-                <option value="8">Fallingstar Beast (Caelid)</option>
-                <option value="8">Mad Pumpkin Head x2</option>
-                <option value="8">Magma Wyrm (Caelid)</option>
-                <option value="9">Demi-Human Queen Gilika</option>
-                <option value="9">Sanguine Noble</option>
-                <option value="9">Stonedigger Troll (Altus)</option>
-                <option value="10">Crystalian x2</option>
-                <option value="10">Onyx Lord (Capital Outskirts)</option>
-                <option value="17">Astel, Star of Darkness</option>
-            </select>
-
-            <select name="bosses-mayor" id="bosses-mayor" class="mayor-bosses hidden second">
-                <option value="None"></option>
-                <option value="4">Leonine Misbergotten (Castle Morne)</option>
-                <option value="4">Margit, the Fell Omen</option>
-                <option value="6">Dragonkin Soldier of Nokstella</option>
-                <option value="6">Flying Dragon Agheel</option>
-                <option value="7">Ancestor Spirit</option>
-                <option value="7">Red Wolf of Radagon</option>
-                <option value="7">Royal Knigth Loretta</option>
-                <option value="8">Magma Wyrm Makar</option>
-                <option value="9">Misbergotten Warrior & Crucible Knigth</option>
-                <option value="10">Commander O'Neil</option>
-                <option value="10">Elemer of the Briar</option>
-                <option value="10">Glinstone Dragon Smarag</option>
-                <option value="11">Mimic tear</option>
-                <option value="12">Decaying Ekzykes</option>
-                <option value="12">Dragonkin Soldier (Siofra)</option>
-                <option value="12">Fia's Champions</option>
-                <option value="12">Godfrey, First Elden Lord (Golden Shade)</option>
-                <option value="12">Godskin Noble (Volcano Manor)</option>
-                <option value="12">Magma Wyrm (Mt. Gelmir)</option>
-                <option value="12">Valiant Gargolyes</option>
-                <option value="13">Ancient Dragon Lanssea<x/option></option>
-                <option value="14">Commander Nial</option>
-                <option value="14">Crucible Knigth Silura</option>
-                <option value="14">Dragonkin Soldier (Lake of Rot)</option>
-                <option value="14">Mohg, the Omen</option>
-                <option value="15">Godskin Duo</option>
-                <option value="16">Godskin Apostole (Caelid)</option>
-                <option value="16">Sir Gideon Ofnir, the All-Knowing</option>
-                <option value="17">Borelais, the Freezing Fog</option>
-                <option value="18">Flying Dragon Greyll</option>
-                <option value="18">Glinstone Dragon Adula</option>
-                <option value="19">Great Wyrm Theordorix</option>
-                <option value="19">Loretta, Knight of the Haligtree</option>
-            </select>
-
-            <select name="bosses-rememberance" id="bosses-rememberance" class="rememberance-bosses hidden second">
-                <option value="None"></option>
-                <option value="5">Godrick the Grafted</option>
-                <option value="8">Rennala, Queen of the Full Moon</option>
-                <option value="10">Regal Ancestor Spirit</option>
-                <option value="11">Starscourge Radahn</option>
-                <option value="12">Astel, Naturalborn of the Void</option>
-                <option value="12">Lichdragon Fortissax</option>
-                <option value="12">Morgott, the Omen King</option>
-                <option value="13">Rykard, Lord of Blasphemy</option>
-                <option value="15">Fire Giant</option>
-                <option value="16">Beast Clergyman / Maliketh</option>
-                <option value="17">Godfrey, First Elden Lord / Hoarah Loux</option>
-                <option value="18">Dragonlord Placidusax</option>
-                <option value="18">Radagon + Elden Beast</option>
-                <option value="18">Radagon of the Golden Order</option>
-                <option value="18">Elden Beast</option>
-                <option value="19">Mohg, Lord of Blood</option>
-                <option value="21">Malenia, Blade of Miquella</option>
-            </select>
 
             <select name="bosses-section" class="bosses-section">
                 <option value="None">Select Boss Section</option>
@@ -252,14 +72,292 @@
         </div>
 
         <script>
-            var lvls = 1;
+            var lvls = 5;
             var minorPoints = 0;
             const minors = document.getElementById("minors");
             var mayorPoints = 0;
             const mayors = document.getElementById("mayors");
-            var totalPoints = 0;
+            var totalPoints = 1;
             const totals = document.getElementById("totals");
             var type = "";
+
+            var menu = false;
+
+            const tienda = {
+                weapons: [
+                    {
+                        requeriment: "0",
+                        value: "1",
+                        text: "MISÉRICORDE",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/misericorde_dagger_weapon_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "3",
+                        text: "FIRE KNIGHT'S SHORTSWORD",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/fire_knights_shortsword_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "10",
+                        text: "Reduvia",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/reduvia_dagger_weapon_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requeriment: "0",
+                        value: "1",
+                        text: "SHORT SWORD",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/short_sword_straight_sword_weapon_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "3",
+                        text: "BROADSWORD",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/broadsword_straight_sword_weapon_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "7",
+                        text: "REGALIA OF EOCHAID",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/regalia_of_eochaid_straight_sword_weapon_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requeriment: "0",
+                        value: "1",
+                        text: "ESTOC",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/estoc_thrusting_sword_weapon_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "5",
+                        text: "FROZEN NEEDLE",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/frozen_needle_thrusting_sword_weapon_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "10",
+                        text: "ANTSPUR RAPIER",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/antspur_rapier_thrusting_sword_weapon_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requeriment: "0",
+                        value: "1",
+                        text: "VARRÉ'S BOUQUET",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/varres_bouquet_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "3",
+                        text: "CLUB",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/club_hammer_weapon_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "7",
+                        text: "SPIKED CLUB",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/spiked_club_hammer_weapon_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requeriment: "0",
+                        value: "1",
+                        text: "SMITHSCRIPT SPEAR",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/smithscript_spear_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "5",
+                        text: "CLAYMAN'S HARPOON",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/claymans_harpoon_spear_weapon_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "7",
+                        text: "BLOODFIEND'S FORK",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/bloodfiends_fork_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+                    },
+                    {
+                        requeriment: "0",
+                        value: "1",
+                        text: "HAND AXE",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/hand_axe_weapon_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "3",
+                        text: "BATTLE AXE",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/battle_axe_weapon_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "5",
+                        text: "DEATH KNIGHT'S TWIN AXES",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/death_knights_twin_axes_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+                    },
+                    {
+                        requeriment: "0",
+                        value: "1",
+                        text: "NOX FLOWING SWORD",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/nox_flowing_sword_curved_sword_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "5",
+                        text: "SCAVENGER'S CURVED SWORD",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/scavengers_curved_sword_curved_sword_weapon_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "10",
+                        text: "FALX",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/falx_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+                    },
+                    {
+                        requeriment: "0",
+                        value: "2",
+                        text: "SWORD OF NIGHT",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/sword_of_night_katana_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "5",
+                        text: "NAGAKIBA",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/nagakiba_katana_weapon_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "20",
+                        text: "HAND OF MALENIA",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/hand_of_malenia_katana_weapon_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requeriment: "0",
+                        value: "2",
+                        text: "HELPHEN'S STEEPLE",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/helphens_steeple.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "7",
+                        text: "SWORD OF MILOS",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/sword_of_milos_weapon_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "10",
+                        text: "MARAIS EXECUTIONER'S SWORD",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/marais_executioners_sword_weapon_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requeriment: "0",
+                        value: "2",
+                        text: "GODSKIN STITCHER",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/godskin_stitcher_heavy_thrusting_sword_weapon_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "5",
+                        text: "SWORD LANCE",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/sword_lance_heavy_thrusting_sword_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "10",
+                        text: "BLOODY HELICE",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/bloody_helice_heavy_thrusting_sword_weapon_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requeriment: "0",
+                        value: "2",
+                        text: "SPEAR OF THE IMPALER",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/spear_of_the_impaler_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "7",
+                        text: "SERPENT-HUNTER",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/serpent-hunter_greatspear_weapon_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "10",
+                        text: "MOHGWYN'S SACRED SPEAR",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/mohgwyns_sacred_spear_great_spears_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requeriment: "0",
+                        value: "3",
+                        text: "SHADOW SUNFLOWER BLOSSOM",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/shadow_sunflower_blossom_colossal_weapon_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "5",
+                        text: "ANVIL HAMMER",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/anvil_hammer_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "10",
+                        text: "BLOODFIEND'S ARM",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/bloodfiends_arm_colossal_weapon_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+                    },
+                    {
+                        requeriment: "0",
+                        value: "4",
+                        text: "GREATSWORD",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/greatsword_colossal_swords_elden_ring_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "7",
+                        text: "ANCIENT METEORIC ORE GREATSWORD",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/ancient_meteoric_ore_greatsword_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+                    },
+                    {
+                        requirement: "0",
+                        value: "10",
+                        text: "FIRE KNIGHT'S GREATSWORD",
+                        image: "https://eldenring.wiki.fextralife.com/file/Elden-Ring/fire_knights_greatsword_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+                    },
+                ],
+
+                armor: [
+                    { requeriment: "0", value: "1", text: "Ligera" },
+                    { requeriment: "0", value: "4", text: "Mediana" },
+                    { requeriment: "0", value: "8", text: "Pesada" },
+                ],
+
+                talismans: [
+                    { requeriment: "0", value: "2", text: "Favor del arbol auero" },
+                    { requeriment: "0", value: "3", text: "Favor del arbol auero +1" },
+                    { requeriment: "0", value: "2", text: "Favor del arbol auero +2" },
+                    { requeriment: "0", value: "5", text: "Marca ulcerada de Radagon" },
+                    { requeriment: "0", value: "2", text: "Marca cicatrizada de Radagon" },
+                    { requeriment: "0", value: "1", text: "Talisman de escudo de emeblema de dragon" },
+                    { requeriment: "0", value: "2", text: "Talisman de escudo de emeblema de dragon +1" },
+                    { requeriment: "0", value: "3", text: "Talisman de escudo de emeblema de dragon +2" },
+                    { requeriment: "0", value: "3", text: "Talisman de escudo con blason de dragon" },
+                    { requeriment: "0", value: "3", text: "Fragmento de guerrero tarro" },
+                    { requeriment: "0", value: "5", text: "Fragmento de Alexander" },
+                    { requeriment: "0", value: "3", text: "Insignia con espada alada" },
+                    { requeriment: "0", value: "2", text: "Protesis de Milicent" },
+                    { requeriment: "0", value: "2", text: "Insignia con espada alada podrida" },
+                    { requeriment: "0", value: "5", text: "Talisman de hacha" },
+                    { requeriment: "0", value: "3", text: "Talisman de garra" },
+                    { requeriment: "0", value: "3", text: "Talisman de daga" },
+                    { requeriment: "0", value: "5", text: "Reliquia de la guerra protesica" },
+                    { requeriment: "0", value: "5", text: "Reliquia de la astronoma" },
+                    { requeriment: "0", value: "5", text: "Reliquia de los dos dedos" },
+                    { requeriment: "0", value: "5", text: "Reliquia de azote de las estrellas " },
+                    { requeriment: "0", value: "3", text: "Amuleto de bailarina azul" },
+                    { requeriment: "0", value: "2", text: "Amuleto de escorpion magico" },
+                    { requeriment: "0", value: "2", text: "Amuleto de escorpion igneo" },
+                    { requeriment: "0", value: "2", text: "Amuleto de escorpion fulgurante" },
+                    { requeriment: "0", value: "2", text: "Amuleto de escorpion sagrado" },
+                    { requeriment: "0", value: "5", text: "Talisman de espada ritual" },
+                    { requeriment: "0", value: "5", text: "Talisman de escudo ritual" },
+                ],
+            };
 
             const bossesLvls = [];
             document.body.addEventListener("change", function (event) {
@@ -530,6 +628,117 @@
 
             function handleClick() {
                 window.location.reload();
+            }
+
+            function toggleShopMenu(menuType) {
+                if (menu != menuType) {
+                    document.getElementById("shopMenu").classList.remove("hidden");
+                } else {
+                    document.getElementById("shopMenu").classList.add("hidden");
+                }
+
+                if (menuType == menu) {
+                    menu = "";
+                } else {
+                    menu = menuType;
+                }
+
+                console.log("menu", menu);
+                console.log("menuType", menuType);
+            }
+
+            function weaponShop() {
+                toggleShopMenu("weapons");
+
+                const shopMenu = document.getElementById("shopMenu");
+                shopMenu.innerHTML = "";
+
+                tienda.weapons.forEach((weapon) => {
+                    const btn = document.createElement("button");
+
+                    // Create an image element
+                    const img = document.createElement("img");
+                    img.src = weapon.image;
+                    img.alt = weapon.text;
+
+                    // Append the image to the button
+                    btn.appendChild(img);
+                    btn.onclick = () => {
+                        if (totalPoints >= weapon.value) {
+                            totalPoints = totalPoints - weapon.value;
+                            Swal.fire({
+                                title: "Successfully purchased!",
+                                text: "Now you can use your weapon freely!",
+                                icon: "success",
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "Cant buy!",
+                                text: "You dont have enough points for buy it!",
+                                icon: "error",
+                            });
+                        }
+                    };
+                    shopMenu.appendChild(btn);
+                });
+            }
+
+            function armorShop() {
+                toggleShopMenu("armor");
+
+                const shopMenu = document.getElementById("shopMenu");
+                shopMenu.innerHTML = "";
+
+                tienda.armor.forEach((armor) => {
+                    const btn = document.createElement("button");
+                    btn.innerText = armor.text;
+                    btn.onclick = () => {
+                        if (minorPoints >= armor.value) {
+                            minorPoints = minorPoints - armor.value;
+                            Swal.fire({
+                                title: "Successfully purchased!",
+                                text: "Now you can use your armor freely!",
+                                icon: "success",
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "Cant buy!",
+                                text: "You dont have enough points for buy it!",
+                                icon: "error",
+                            });
+                        }
+                    };
+                    shopMenu.appendChild(btn);
+                });
+            }
+
+            function talismansShop() {
+                toggleShopMenu("talismans");
+
+                const shopMenu = document.getElementById("shopMenu");
+                shopMenu.innerHTML = "";
+
+                tienda.talismans.forEach((talisman) => {
+                    const btn = document.createElement("button");
+                    btn.innerText = talisman.text;
+                    btn.onclick = () => {
+                        if (mayorPoints >= talisman.value) {
+                            mayorPoints = mayorPoints - talisman.value;
+                            Swal.fire({
+                                title: "Successfully purchased!",
+                                text: "Now you can use your talisman freely!",
+                                icon: "success",
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "Cant buy!",
+                                text: "You dont have enough points for buy it!",
+                                icon: "error",
+                            });
+                        }
+                    };
+                    shopMenu.appendChild(btn);
+                });
             }
 
             function addPoints(type) {
